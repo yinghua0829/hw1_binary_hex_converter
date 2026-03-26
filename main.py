@@ -1,3 +1,5 @@
+import tkinter as tk
+
 def dec_to_bin(n):
     if n == 0:
         return "0"
@@ -17,16 +19,39 @@ def dec_to_hex(n):
         n = n // 16
     return result
 
-# 主程式
-try:
-    num = int(input("請輸入0-255: "))
-    
-    if num < 0 or num > 255:
-        print("請輸入0到255之間的數字")
-    else:
-        print("Binary:", dec_to_bin(num))
-        print("Decimal:", num)
-        print("Hex:", dec_to_hex(num))
+def convert():
+    try:
+        num = int(entry.get())
+        
+        if num < 0 or num > 255:
+            result_label.config(text="請輸入0-255")
+            return
+        
+        b = dec_to_bin(num)
+        h = dec_to_hex(num)
 
-except:
-    print("輸入錯誤")
+        result_label.config(
+            text=f"Binary: {b}\nDecimal: {num}\nHex: {h}"
+        )
+        
+    except:
+        result_label.config(text="輸入錯誤")
+
+# 建立視窗
+root = tk.Tk()
+root.title("Binary / Decimal / Hex Converter")
+
+# 輸入框
+entry = tk.Entry(root)
+entry.pack()
+
+# 按鈕
+btn = tk.Button(root, text="Convert", command=convert)
+btn.pack()
+
+# 顯示結果
+result_label = tk.Label(root, text="")
+result_label.pack()
+
+# 啟動程式
+root.mainloop()
